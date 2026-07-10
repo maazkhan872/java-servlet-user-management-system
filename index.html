@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Modern Login Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 320px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 24px;
+            color: #333333;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .input-group input:focus {
+            border-color: #9b59b6;
+            outline: none;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #9b59b6, #71b7e6);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+            margin-top: 10px;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+        .signup-link {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #666;
+        }
+        .signup-link a {
+            color: #9b59b6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        #loginResult {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>System Login</h2>
+
+        <!-- -->
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="user">myUsername</label>
+                <input type="text" id="user" name="myUsername" placeholder="Enter your username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="myPassword" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Login Now</button>
+
+            <div class="signup-link">
+                New user? <a href="signup.html">Sign up here</a>
+            </div>
+
+            <div id="loginResult"></div>
+
+        </form>
+    </div>
+
+    <script>
+    document.querySelector('#loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('mylogin', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+        	
+        	// if server redirect so manually navigate 
+            if (response.redirected) {
+                window.location.href = response.url;  // show welcome page 
+                return;
+            }
+            return response.text();
+        })
+        .then(data => {
+            if (data) {
+                document.getElementById('loginResult').innerHTML = data;
+            }
+        })
+        .catch(error => {
+            document.getElementById('loginResult').innerHTML =
+                "<h2 style='color:red;'>Something went wrong!</h2>";
+        });
+    });
+</script>
+
+</body>
+</html>
