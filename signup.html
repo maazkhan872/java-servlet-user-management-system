@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Sign Up - Modern Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 360px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 24px;
+            color: #333333;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #9b59b6;
+            outline: none;
+        }
+        .radio-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .radio-group label.title {
+            display: block;
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .radio-group .radio-options {
+            display: flex;
+            gap: 20px;
+        }
+        .radio-options label {
+            font-size: 14px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #9b59b6, #71b7e6);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+            margin-top: 10px;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+        .login-link {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #666;
+        }
+        .login-link a {
+            color: #9b59b6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        #result {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Create Account</h2>
+
+        <form id="myForm">
+
+            <div class="input-group">
+                <label for="username">myUsername</label>
+                <input type="text" id="username" name="name1" placeholder="Enter your username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email1" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="pass1" placeholder="Enter your password" required>
+            </div>
+
+            <div class="radio-group">
+                <label class="title">Gender</label>
+                <div class="radio-options">
+                    <label><input type="radio" name="gender1" value="Male" required> Male</label>
+                    <label><input type="radio" name="gender1" value="Female"> Female</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="city">City</label>
+                <select id="city" name="city1" required>
+                    <option value="" disabled selected>Select your city</option>
+                    <option value="Karachi">Karachi</option>
+                    <option value="Lahore">Lahore</option>
+                    <option value="Islamabad">Islamabad</option>
+                    <option value="Faisalabad">Faisalabad</option>
+                    <option value="Multan">Multan</option>
+                    <option value="Peshawar">Peshawar</option>
+                    <option value="Quetta">Quetta</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign Up</button>
+
+            <div class="login-link">
+                Already have an account? <a href="index.html">Login here</a>
+            </div>
+
+            <!-- Result div -->
+            <div id="result"></div>
+
+        </form>
+    </div>
+
+    <script>
+        const myForm = document.querySelector('#myForm');
+
+        myForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(myForm);
+
+            fetch('register', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('result').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML =
+                    "<h2 style='color:red;'>Something went wrong!</h2>";
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
