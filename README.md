@@ -77,6 +77,7 @@ The system maintains comprehensive user security metadata including:
 * BCrypt Password Hashing
 * JavaMail API
 * Apache Tomcat
+* postgres
 
 ## Security Highlights
 
